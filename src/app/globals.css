@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@layer base {
+  :root {
+    --primary: 153 45% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 22 45% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 42 62% 55%;
+    --accent-foreground: 0 0% 18%;
+    --background: 40 25% 95%;
+    --foreground: 0 0% 18%;
+    --card: 40 25% 97%;
+    --card-foreground: 0 0% 18%;
+    --popover: 40 25% 97%;
+    --popover-foreground: 0 0% 18%;
+    --muted: 36 10% 78%;
+    --muted-foreground: 0 0% 36%;
+    --destructive: 4 46% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 10% 78%;
+    --input: 36 10% 85%;
+    --ring: 153 45% 30%;
+    --radius: 0.75rem;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-20: 80px;
+    --space-24: 96px;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    box-sizing: border-box;
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: "Alegreya Sans", system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Alegreya", Georgia, serif;
+    font-weight: 700;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Skip navigation */
+.skip-nav {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: var(--radius);
+  transition: top 0.2s;
+  font-weight: 500;
+}
+.skip-nav:focus {
+  top: 8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
