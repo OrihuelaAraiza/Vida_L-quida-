@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json(
+      { error: "Stripe no está configurado. Contacta al administrador." },
+      { status: 503 }
+    );
+  }
+
   try {
     const { amount, currency = "mxn", metadata } = await req.json();
 
