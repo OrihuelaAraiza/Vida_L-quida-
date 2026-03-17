@@ -1,9 +1,12 @@
 "use client";
+
 import { useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
 import { Container } from "@/components/layout/Container";
 import { CheckoutStepper } from "@/components/checkout/CheckoutStepper";
 import { AddressForm } from "@/components/checkout/AddressForm";
 import { PaymentSelector, type PaymentMethod } from "@/components/checkout/PaymentSelector";
+import { StripeCardForm } from "@/components/checkout/StripeCardForm";
 import { CartSummary } from "@/components/cart/CartSummary";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +15,7 @@ import { useCartStore } from "@/stores/cart-store";
 import { useRouter } from "next/navigation";
 import type { Address } from "@/types";
 import { formatMXN, getShippingCost } from "@/lib/utils";
+import { stripePromise } from "@/lib/stripe-client";
 
 interface CustomerInfo {
   name: string;
@@ -25,6 +29,7 @@ export default function CheckoutPage() {
   const [address, setAddress] = useState<Address | null>(null);
   const [shippingMethod, setShippingMethod] = useState<"standard" | "express">("standard");
   const [loading, setLoading] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
   const router = useRouter();
   const { items, getTotalPrice, clearCart } = useCartStore();
 
@@ -49,9 +54,11 @@ export default function CheckoutPage() {
     setStep(3);
   }
 
-  async function handlePayment(method: PaymentMethod) {
-    if (!customer || !address) return;
+  /** Called for OXXO / SPEI — Conekta flow unchanged */
+  async function handleConektaPayment(method: PaymentMethod) {
+    if (!customer || !address || method === "stripe") return;
     setLoading(true);
+    setPaymentError(null);
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
@@ -61,7 +68,8 @@ export default function CheckoutPage() {
             productId: i.product._id,
             name: i.product.name,
             presentation: i.selectedPresentation,
-            price: i.product.presentations?.find((p) => p.size === i.selectedPresentation)?.price ?? 0,
+            price:
+              i.product.presentations?.find((p) => p.size === i.selectedPresentation)?.price ?? 0,
             quantity: i.quantity,
           })),
           total,
@@ -75,7 +83,54 @@ export default function CheckoutPage() {
       if (data.orderId) {
         clearCart();
         router.push(`/checkout/confirmacion/${data.orderId}`);
+      } else {
+        setPaymentError(data.error ?? "No se pudo crear el pedido");
       }
+    } catch {
+      setPaymentError("Error de conexión. Intenta de nuevo.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  /**
+   * Called by StripeCardForm on successful PaymentIntent confirmation.
+   * Creates the order record in our system and redirects to confirmation.
+   */
+  async function handleStripeSuccess(paymentIntentId: string) {
+    if (!customer || !address) return;
+    setLoading(true);
+    setPaymentError(null);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({
+            productId: i.product._id,
+            name: i.product.name,
+            presentation: i.selectedPresentation,
+            price:
+              i.product.presentations?.find((p) => p.size === i.selectedPresentation)?.price ?? 0,
+            quantity: i.quantity,
+          })),
+          total,
+          customer,
+          address,
+          paymentMethod: "stripe",
+          shipping,
+          stripePaymentIntentId: paymentIntentId,
+        }),
+      });
+      const data = await response.json();
+      if (data.orderId) {
+        clearCart();
+        router.push(`/checkout/confirmacion/${data.orderId}`);
+      } else {
+        setPaymentError(data.error ?? "No se pudo registrar el pedido");
+      }
+    } catch {
+      setPaymentError("Error de conexión. Intenta de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -112,12 +167,15 @@ export default function CheckoutPage() {
           {step === 2 && (
             <section aria-labelledby="step2-heading">
               <h2 id="step2-heading" className="text-xl font-bold mb-6">Dirección de envío</h2>
-              <AddressForm onSubmit={handleAddressSubmit} defaultValues={{ name: customer?.name, phone: customer?.phone }} />
+              <AddressForm
+                onSubmit={handleAddressSubmit}
+                defaultValues={{ name: customer?.name, phone: customer?.phone }}
+              />
               <Button variant="ghost" onClick={() => setStep(1)} className="mt-4">← Regresar</Button>
             </section>
           )}
 
-          {/* Step 3: Payment */}
+          {/* Step 3: Payment — Stripe Elements wraps the whole step */}
           {step === 3 && (
             <section aria-labelledby="step3-heading">
               <h2 id="step3-heading" className="text-xl font-bold mb-4">Método de pago</h2>
@@ -153,7 +211,48 @@ export default function CheckoutPage() {
                 )}
               </div>
 
-              <PaymentSelector total={total} onSubmit={handlePayment} loading={loading} />
+              {/* Wrap in Elements for Stripe card payments */}
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  mode: "payment",
+                  amount: Math.round(total * 100),
+                  currency: "mxn",
+                  appearance: {
+                    theme: "stripe",
+                    variables: {
+                      colorPrimary: "hsl(153 45% 30%)",
+                      colorBackground: "hsl(40 25% 95%)",
+                      borderRadius: "0.75rem",
+                      fontFamily: "'Alegreya Sans', system-ui, sans-serif",
+                    },
+                  },
+                }}
+              >
+                <PaymentSelector
+                  total={total}
+                  onSubmit={handleConektaPayment}
+                  loading={loading}
+                  renderStripeForm={() => (
+                    <StripeCardForm
+                      amount={total}
+                      customerName={customer?.name ?? ""}
+                      customerEmail={customer?.email ?? ""}
+                      onSuccess={handleStripeSuccess}
+                      onError={(msg) => setPaymentError(msg)}
+                      loading={loading}
+                      setLoading={setLoading}
+                    />
+                  )}
+                />
+              </Elements>
+
+              {paymentError && (
+                <p role="alert" className="mt-3 text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">
+                  {paymentError}
+                </p>
+              )}
+
               <Button variant="ghost" onClick={() => setStep(2)} className="mt-4">← Regresar</Button>
             </section>
           )}
@@ -167,7 +266,11 @@ export default function CheckoutPage() {
               <li key={`${item.product._id}-${item.selectedPresentation}`} className="flex justify-between">
                 <span>{item.product.name} ({item.selectedPresentation}) ×{item.quantity}</span>
                 <span>
-                  {formatMXN((item.product.presentations?.find((p) => p.size === item.selectedPresentation)?.price ?? 0) * item.quantity * 1.16)}
+                  {formatMXN(
+                    (item.product.presentations?.find((p) => p.size === item.selectedPresentation)?.price ?? 0) *
+                      item.quantity *
+                      1.16
+                  )}
                 </span>
               </li>
             ))}

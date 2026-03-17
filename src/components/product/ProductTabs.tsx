@@ -1,5 +1,5 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { FileText, ExternalLink } from "lucide-react";
+import { FileText, ExternalLink, ShieldCheck, Leaf, Wind, GraduationCap } from "lucide-react";
 import type { Product } from "@/types";
 
 interface ProductTabsProps {
@@ -21,10 +21,10 @@ export function ProductTabs({ product }: ProductTabsProps) {
           {product.description ?? "Producto de limpieza orgánico, biodegradable y sin vapores tóxicos de Vida Líquida."}
         </p>
         <ul className="mt-4 space-y-2 text-sm">
-          <li className="flex items-center gap-2">✅ Certificado COFEPRIS</li>
-          <li className="flex items-center gap-2">🌿 100% biodegradable</li>
-          <li className="flex items-center gap-2">🫁 Sin vapores tóxicos</li>
-          <li className="flex items-center gap-2">🎓 Avalado por la BUAP</li>
+          <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Certificado COFEPRIS</li>
+          <li className="flex items-center gap-2"><Leaf className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> 100% biodegradable</li>
+          <li className="flex items-center gap-2"><Wind className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Sin vapores tóxicos</li>
+          <li className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Avalado por la BUAP</li>
         </ul>
       </TabsContent>
 

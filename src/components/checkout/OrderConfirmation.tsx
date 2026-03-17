@@ -1,9 +1,17 @@
+"use client";
+
 import { CheckCircle, Package, Truck, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OxxoVoucher } from "./OxxoVoucher";
 import type { Order } from "@/types";
 import { formatMXN } from "@/lib/utils";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const ConfettiCelebration = dynamic(
+  () => import("./ConfettiCelebration").then((m) => m.ConfettiCelebration),
+  { ssr: false }
+);
 
 interface OrderConfirmationProps {
   order: Order;
@@ -19,6 +27,8 @@ const STATUS_STEPS = [
 export function OrderConfirmation({ order }: OrderConfirmationProps) {
   return (
     <div className="space-y-8">
+      <ConfettiCelebration message="¡Pedido confirmado! Tu pedido está en camino." />
+
       {/* Header */}
       <div className="text-center space-y-2">
         <div className="flex justify-center">

@@ -83,6 +83,32 @@
       "domain": "seo",
       "model": "sonnet",
       "modelRoutedBy": "explicit"
+    },
+    "vl-orchestrator": {
+      "agentId": "vl-orchestrator",
+      "agentType": "coordinator",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "model": "sonnet"
+      },
+      "createdAt": "2026-03-17T13:47:35.565Z",
+      "model": "sonnet",
+      "modelRoutedBy": "explicit"
+    },
+    "vl-architect": {
+      "agentId": "vl-architect",
+      "agentType": "architect",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "model": "sonnet"
+      },
+      "createdAt": "2026-03-17T13:47:35.593Z",
+      "model": "sonnet",
+      "modelRoutedBy": "explicit"
     }
   },
   "version": "3.0.0"

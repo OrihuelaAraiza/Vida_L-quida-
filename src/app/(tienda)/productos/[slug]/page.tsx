@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { getProductBySlug, getRelatedProducts } from "@/lib/sanity/queries";
 import { AddToCartSection } from "./AddToCartSection";
 import { ProductGrid } from "@/components/product/ProductGrid";
+import { BlurFadeSection, PDPTrustBadges, PDPLiveActivity } from "./PDPClientEnhancements";
 
 export const revalidate = 30;
 
@@ -73,39 +74,46 @@ export default async function ProductPage({ params }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Gallery */}
-          <ProductGallery images={product.images ?? []} productName={product.name} />
+          <BlurFadeSection delay={0.1} inView>
+            <ProductGallery images={product.images ?? []} productName={product.name} />
+          </BlurFadeSection>
 
           {/* Info */}
-          <div className="space-y-6">
-            {product.category && (
-              <Badge variant="secondary">{product.category.name}</Badge>
-            )}
-            <h1 className="text-3xl font-bold leading-tight">{product.name}</h1>
+          <BlurFadeSection delay={0.2} inView>
+            <div className="space-y-6">
+              {product.category && (
+                <Badge variant="secondary">{product.category.name}</Badge>
+              )}
+              <h1 className="text-3xl font-bold leading-tight">{product.name}</h1>
 
-            <div className="flex items-center gap-3">
-              <Rating value={product.rating ?? 0} size="md" showCount count={product.reviewCount} />
-              {product.reviewCount > 0 && (
-                <a href="#reviews" className="text-sm text-[hsl(var(--primary))] hover:underline">
-                  Ver {product.reviewCount} reseña{product.reviewCount !== 1 ? "s" : ""}
-                </a>
+              <div className="flex items-center gap-3">
+                <Rating value={product.rating ?? 0} size="md" showCount count={product.reviewCount} />
+                {product.reviewCount > 0 && (
+                  <a href="#reviews" className="text-sm text-[hsl(var(--primary))] hover:underline">
+                    Ver {product.reviewCount} reseña{product.reviewCount !== 1 ? "s" : ""}
+                  </a>
+                )}
+              </div>
+
+              <AddToCartSection product={product} />
+
+              {/* Trust badges with AnimatedShinyText */}
+              <PDPTrustBadges />
+
+              {/* Demo video */}
+              {product.videoUrl && (
+                <div className="rounded-xl overflow-hidden aspect-video">
+                  <iframe
+                    src={product.videoUrl.replace("watch?v=", "embed/")}
+                    title={`Video demostrativo: ${product.name}`}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
               )}
             </div>
-
-            <AddToCartSection product={product} />
-
-            {/* Demo video */}
-            {product.videoUrl && (
-              <div className="rounded-xl overflow-hidden aspect-video">
-                <iframe
-                  src={product.videoUrl.replace("watch?v=", "embed/")}
-                  title={`Video demostrativo: ${product.name}`}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            )}
-          </div>
+          </BlurFadeSection>
         </div>
 
         {/* Tabs */}
@@ -115,12 +123,17 @@ export default async function ProductPage({ params }: Props) {
 
         {/* Related */}
         {related.length > 0 && (
-          <section className="mt-16" aria-labelledby="related-heading">
-            <h2 id="related-heading" className="text-2xl font-bold mb-6">Frecuentemente comprados juntos</h2>
-            <ProductGrid products={related.slice(0, 4)} />
-          </section>
+          <BlurFadeSection delay={0.3} inView>
+            <section className="mt-16" aria-labelledby="related-heading">
+              <h2 id="related-heading" className="text-2xl font-bold mb-6">Frecuentemente comprados juntos</h2>
+              <ProductGrid products={related.slice(0, 4)} />
+            </section>
+          </BlurFadeSection>
         )}
       </Container>
+
+      {/* LiveActivity — fixed floating widget, client-only */}
+      <PDPLiveActivity />
     </>
   );
 }

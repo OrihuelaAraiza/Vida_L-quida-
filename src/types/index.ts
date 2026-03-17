@@ -25,6 +25,7 @@ export interface Product {
   safetySheet?: string;
   videoUrl?: string;
   isFeatured: boolean;
+  isBestseller?: boolean;
   rating: number;
   reviewCount: number;
   useCase?: string[];
@@ -89,7 +90,8 @@ export interface Order {
   shipping: number;
   total: number;
   address: Address;
-  paymentMethod: "card" | "oxxo" | "spei" | "msi";
+  paymentMethod: "stripe" | "oxxo" | "spei" | "msi";
+  stripePaymentIntentId?: string;
   conektaOrderId?: string;
   oxxoReference?: string;
   speiClabe?: string;

@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude / Claude Flow / Ruflo
+.claude/
+.claude-flow/
+.swarm/
+CLAUDE.md
+memory/
+*.claude
+.ruflo/

@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/Container";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { TrustBadges } from "@/components/shared/TrustBadges";
+import { HeroClient } from "@/components/home/HeroClient";
 import { getFeaturedProducts } from "@/lib/sanity/queries";
-import { Star, ChevronRight } from "lucide-react";
+import { Star, ChevronRight, Home, Factory, Car, Sparkles, Leaf, Wind, Recycle, FlaskConical, ShieldCheck, Package } from "lucide-react";
 
 export const revalidate = 300;
 
@@ -16,10 +17,10 @@ export const metadata: Metadata = {
 };
 
 const CATEGORIES = [
-  { name: "Hogar", emoji: "🏠", href: "/productos?categoria=hogar", color: "bg-green-50" },
-  { name: "Industrial", emoji: "🏭", href: "/productos?categoria=industrial", color: "bg-blue-50" },
-  { name: "Automotriz", emoji: "🚗", href: "/productos?categoria=automotriz", color: "bg-orange-50" },
-  { name: "Cosmética", emoji: "✨", href: "/productos?categoria=cosmetica", color: "bg-pink-50" },
+  { name: "Hogar", Icon: Home, href: "/productos?categoria=hogar", color: "bg-green-50" },
+  { name: "Industrial", Icon: Factory, href: "/productos?categoria=industrial", color: "bg-blue-50" },
+  { name: "Automotriz", Icon: Car, href: "/productos?categoria=automotriz", color: "bg-orange-50" },
+  { name: "Cosmética", Icon: Sparkles, href: "/productos?categoria=cosmetica", color: "bg-pink-50" },
 ];
 
 const TESTIMONIALS = [
@@ -51,30 +52,7 @@ export default async function HomePage() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(153,45%,15%)] via-[hsl(153,45%,25%)] to-[hsl(153,45%,30%)] text-white">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url('/hero-pattern.svg')" }} aria-hidden />
-        <Container className="relative py-20 md:py-32">
-          <div className="max-w-2xl">
-            <span className="inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-medium mb-6 text-white">
-              🌿 Certificado COFEPRIS · Aval BUAP
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Limpieza orgánica para un hogar más sano
-            </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
-              Productos biodegradables, sin vapores tóxicos, formulados con ingredientes naturales en Puebla. Seguros para tu familia y el planeta.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button size="lg" asChild className="bg-white text-[hsl(var(--primary))] hover:bg-white/90 font-semibold">
-                <Link href="/productos">Ver catálogo →</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="border-white text-white hover:bg-white/10">
-                <Link href="/nosotros">Conoce más</Link>
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <HeroClient />
 
       {/* Categories */}
       <section className="py-12" aria-labelledby="categories-heading">
@@ -87,7 +65,7 @@ export default async function HomePage() {
                 href={cat.href}
                 className={`${cat.color} rounded-2xl p-6 text-center hover:shadow-md transition-shadow group min-h-[44px] flex flex-col items-center gap-2`}
               >
-                <span className="text-4xl">{cat.emoji}</span>
+                <cat.Icon className="h-9 w-9 text-[hsl(var(--primary))]" aria-hidden="true" />
                 <span className="font-semibold text-sm group-hover:text-[hsl(var(--primary))] transition-colors">
                   {cat.name}
                 </span>
@@ -120,15 +98,15 @@ export default async function HomePage() {
           <h2 id="values-heading" className="text-2xl font-bold text-center mb-12">¿Por qué elegir Vida Líquida?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { emoji: "🌿", title: "Ingredientes naturales", desc: "Formulados con extractos vegetales y sin compuestos petroquímicos." },
-              { emoji: "🫁", title: "Sin vapores tóxicos", desc: "Seguros de usar en espacios cerrados sin necesidad de ventilación especial." },
-              { emoji: "♻️", title: "Biodegradables al 100%", desc: "Se degradan completamente sin contaminar agua ni suelo." },
-              { emoji: "🔬", title: "Respaldo científico", desc: "Formulados y certificados en colaboración con la BUAP." },
-              { emoji: "🛡️", title: "COFEPRIS", desc: "Registro sanitario vigente, cumplimos todas las normas mexicanas." },
-              { emoji: "📦", title: "Envío a todo México", desc: "Llegamos a más de 15 estados con servicio estándar y express." },
+              { Icon: Leaf, title: "Ingredientes naturales", desc: "Formulados con extractos vegetales y sin compuestos petroquímicos." },
+              { Icon: Wind, title: "Sin vapores tóxicos", desc: "Seguros de usar en espacios cerrados sin necesidad de ventilación especial." },
+              { Icon: Recycle, title: "Biodegradables al 100%", desc: "Se degradan completamente sin contaminar agua ni suelo." },
+              { Icon: FlaskConical, title: "Respaldo científico", desc: "Formulados y certificados en colaboración con la BUAP." },
+              { Icon: ShieldCheck, title: "COFEPRIS", desc: "Registro sanitario vigente, cumplimos todas las normas mexicanas." },
+              { Icon: Package, title: "Envío a todo México", desc: "Llegamos a más de 15 estados con servicio estándar y express." },
             ].map((item) => (
               <div key={item.title} className="flex gap-4">
-                <span className="text-3xl shrink-0">{item.emoji}</span>
+                <item.Icon className="h-7 w-7 shrink-0 text-[hsl(var(--primary))]" aria-hidden="true" />
                 <div>
                   <h3 className="font-semibold mb-1">{item.title}</h3>
                   <p className="text-sm text-[hsl(var(--muted-foreground))]">{item.desc}</p>
