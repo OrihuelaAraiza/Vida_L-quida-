@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap');
 
 /* ── VIDA LÍQUIDA DESIGN SYSTEM v2 — Dark Electric ── */
 @theme {
@@ -16,9 +15,9 @@
   --color-vl-surface: #071A2E;
   --color-vl-surface-2: #0D2640;
 
-  /* Fonts */
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body: 'Nunito', system-ui, sans-serif;
+  /* Fonts — next/font sets --font-bebas and --font-nunito on body */
+  --font-display: var(--font-bebas, 'Bebas Neue', sans-serif);
+  --font-body: var(--font-nunito, 'Nunito', system-ui, sans-serif);
 
   /* Animations */
   --animate-vl-blob: vl-blob 8s ease-in-out infinite;
@@ -81,8 +80,8 @@
     box-sizing: border-box;
   }
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    background-color: #050E1A;
+    color: #FFFFFF;
     font-family: var(--font-body);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;

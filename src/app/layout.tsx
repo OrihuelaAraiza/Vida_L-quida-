@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { bebasNeue, nunito } from "@/lib/fonts";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileNav } from "@/components/layout/MobileNav";
@@ -34,8 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-MX">
-      <body>
+    <html lang="es-MX" className="dark" suppressHydrationWarning>
+      <body
+        className={`${bebasNeue.variable} ${nunito.variable}`}
+        style={{ background: "#050E1A", color: "#FFFFFF", minHeight: "100vh" }}
+      >
         <a href="#main-content" className="skip-nav">
           Saltar al contenido principal
         </a>

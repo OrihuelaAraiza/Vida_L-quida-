@@ -23,16 +23,19 @@ const navLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-[hsl(var(--border))] bg-[hsl(var(--foreground))] text-white mt-20">
+    <footer className="border-t border-[rgba(0,194,240,0.12)] bg-[#071A2E] text-white mt-20">
       <Container className="py-12">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[hsl(var(--primary))]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "linear-gradient(135deg, #00C2F0, #0088CC)" }}>
                 <span className="text-white font-bold text-sm">VL</span>
               </div>
-              <span className="font-bold text-lg font-['Alegreya']">Vida Líquida</span>
+              <span className="font-display text-xl tracking-widest">
+                <span style={{ color: "#00C2F0" }}>VIDA</span>{" "}
+                <span style={{ color: "#39D353" }}>LÍQUIDA</span>
+              </span>
             </div>
             <p className="text-sm text-white/70 mb-4 leading-relaxed">
               Productos de limpieza orgánicos, biodegradables y sin vapores tóxicos. Certificados por COFEPRIS y avalados por la BUAP.
