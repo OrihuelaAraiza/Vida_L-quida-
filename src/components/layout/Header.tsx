@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ShoppingCart, User, Search, Menu } from "lucide-react";
+import { ShoppingCart, User, Search } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/stores/cart-store";
 import { useUIStore } from "@/stores/ui-store";
@@ -25,18 +25,18 @@ export function Header() {
   const headerBg = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(245, 241, 235, 0)", "rgba(245, 241, 235, 0.85)"]
+    ["rgba(5,14,26,0)", "rgba(5,14,26,0.92)"]
   );
-  const headerBlur = useTransform(scrollY, [0, 80], ["blur(0px)", "blur(12px)"]);
+  const headerBlur = useTransform(scrollY, [0, 80], ["blur(0px)", "blur(16px)"]);
   const headerShadow = useTransform(
     scrollY,
     [0, 80],
-    ["0 0 0px transparent", "0 1px 24px rgba(45,106,79,0.08)"]
+    ["0 0 0px transparent", "0 4px 24px rgba(0,194,240,0.08)"]
   );
 
   return (
     <motion.header
-      className="sticky top-0 z-40 w-full border-b border-border"
+      className="sticky top-0 z-40 w-full relative"
       style={{
         backgroundColor: headerBg,
         backdropFilter: headerBlur,
@@ -47,10 +47,10 @@ export function Header() {
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0" aria-label="Vida Líquida - Inicio">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[hsl(var(--primary))]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "linear-gradient(135deg, #00C2F0, #0088CC)" }}>
               <span className="text-white font-bold text-sm font-['Alegreya']">VL</span>
             </div>
-            <span className="hidden sm:block font-bold text-lg font-['Alegreya'] text-[hsl(var(--primary))]">
+            <span className="hidden sm:block font-body font-extrabold text-lg vl-gradient-text-blue">
               Vida Líquida
             </span>
           </Link>
@@ -64,7 +64,7 @@ export function Header() {
               <Link
                 key={cat.href}
                 href={cat.href}
-                className="whitespace-nowrap px-3 py-2 text-sm rounded-[var(--radius)] hover:bg-[hsl(var(--muted))] transition-colors text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] min-h-[44px] flex items-center"
+                className="whitespace-nowrap px-3 py-2 text-sm rounded-[var(--radius)] hover:bg-white/10 transition-colors text-white/50 hover:text-white min-h-[44px] flex items-center"
               >
                 {cat.name}
               </Link>
@@ -83,7 +83,7 @@ export function Header() {
             </Button>
 
             <Button variant="ghost" size="icon" asChild aria-label="Mi cuenta">
-              <Link href="/cuenta" className="flex items-center justify-center">
+              <Link href="/cuenta">
                 <User className="h-5 w-5" />
               </Link>
             </Button>
@@ -134,6 +134,7 @@ export function Header() {
           </div>
         </div>
       </Container>
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#00C2F0] to-transparent opacity-30" aria-hidden="true" />
     </motion.header>
   );
 }

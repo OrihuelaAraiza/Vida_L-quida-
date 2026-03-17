@@ -1,41 +1,77 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+/* ── VIDA LÍQUIDA DESIGN SYSTEM v2 — Dark Electric ── */
+@theme {
+  /* Brand colors */
+  --color-vl-blue: #00C2F0;
+  --color-vl-blue-dark: #0088CC;
+  --color-vl-blue-deep: #003A8C;
+  --color-vl-green: #39D353;
+  --color-vl-green-dark: #1AA334;
+  --color-vl-yellow: #FFD600;
+  --color-vl-yellow-dark: #C28A00;
+  --color-vl-bg: #050E1A;
+  --color-vl-surface: #071A2E;
+  --color-vl-surface-2: #0D2640;
+
+  /* Fonts */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  /* Animations */
+  --animate-vl-blob: vl-blob 8s ease-in-out infinite;
+  --animate-vl-scan: vl-scan 4s linear infinite;
+  --animate-vl-pulse-glow: vl-pulse-glow 2s ease-in-out infinite;
+  --animate-float: float 4s ease-in-out infinite;
+}
 
 @layer base {
   :root {
-    --primary: 153 45% 30%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 22 45% 55%;
+    /* shadcn/ui tokens — mapped to dark electric brand */
+    --background: 210 95% 6%;          /* #050E1A navy dark */
+    --foreground: 0 0% 100%;           /* white */
+    --card: 210 90% 10%;               /* #071A2E navy mid */
+    --card-foreground: 0 0% 100%;
+    --popover: 210 88% 9%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 194 100% 47%;           /* #00C2F0 azul eléctrico */
+    --primary-foreground: 210 95% 6%;
+    --secondary: 133 59% 52%;          /* #39D353 verde vibrante */
     --secondary-foreground: 0 0% 100%;
-    --accent: 42 62% 55%;
-    --accent-foreground: 0 0% 18%;
-    --background: 40 25% 95%;
-    --foreground: 0 0% 18%;
-    --card: 40 25% 97%;
-    --card-foreground: 0 0% 18%;
-    --popover: 40 25% 97%;
-    --popover-foreground: 0 0% 18%;
-    --muted: 36 10% 78%;
-    --muted-foreground: 0 0% 36%;
+    --accent: 50 100% 50%;             /* #FFD600 amarillo energía */
+    --accent-foreground: 210 95% 6%;
+    --muted: 210 60% 12%;
+    --muted-foreground: 210 20% 55%;
     --destructive: 4 46% 54%;
     --destructive-foreground: 0 0% 100%;
-    --border: 36 10% 78%;
-    --input: 36 10% 85%;
-    --ring: 153 45% 30%;
-    --radius: 0.75rem;
+    --border: 210 60% 18%;
+    --input: 210 60% 14%;
+    --ring: 194 100% 47%;
+    --radius: 0.5rem;
 
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-8: 32px;
-    --space-10: 40px;
-    --space-12: 48px;
-    --space-16: 64px;
-    --space-20: 80px;
-    --space-24: 96px;
+    /* Brand raw values (for use without hsl()) */
+    --vl-blue: #00C2F0;
+    --vl-blue-dark: #0088CC;
+    --vl-blue-deep: #003A8C;
+    --vl-green: #39D353;
+    --vl-green-dark: #1AA334;
+    --vl-yellow: #FFD600;
+    --vl-bg: #050E1A;
+    --vl-surface: #071A2E;
+    --vl-surface-2: #0D2640;
+
+    /* Glows */
+    --vl-glow-blue: 0 0 24px rgba(0,194,240,0.35);
+    --vl-glow-green: 0 0 24px rgba(57,211,83,0.35);
+    --vl-glow-yellow: 0 0 24px rgba(255,214,0,0.35);
+
+    /* Spacing base grid */
+    --space-1: 4px; --space-2: 8px; --space-3: 12px;
+    --space-4: 16px; --space-5: 20px; --space-6: 24px;
+    --space-8: 32px; --space-10: 40px; --space-12: 48px;
+    --space-16: 64px; --space-20: 80px; --space-24: 96px;
   }
 }
 
@@ -47,13 +83,14 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: "Alegreya Sans", system-ui, sans-serif;
+    font-family: var(--font-body);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Alegreya", Georgia, serif;
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
   a:focus-visible,
   button:focus-visible,
@@ -70,11 +107,64 @@
   }
 }
 
+/* ── Brand utility classes ── */
+.font-display { font-family: var(--font-display); letter-spacing: 0.05em; }
+
+.vl-gradient-text-blue {
+  background: linear-gradient(90deg, #00C2F0, #60EFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.vl-gradient-text-green {
+  background: linear-gradient(90deg, #39D353, #A8FF78);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.vl-gradient-text-yellow {
+  background: linear-gradient(90deg, #FFD600, #FFE566);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vl-surface-card {
+  background: var(--vl-surface);
+  border: 1px solid rgba(0,194,240,0.12);
+  border-radius: 12px;
+}
+.vl-glow-blue { box-shadow: var(--vl-glow-blue); }
+.vl-glow-green { box-shadow: var(--vl-glow-green); }
+.vl-glow-yellow { box-shadow: var(--vl-glow-yellow); }
+
+/* Scan line animation */
+.vl-scan-line {
+  background: linear-gradient(90deg, transparent, #00C2F0, #39D353, transparent);
+  height: 1px;
+  animation: vl-scan 4s linear infinite;
+}
+
+/* Shimmer overlay */
+@keyframes vl-shimmer-over {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+.vl-shimmer-overlay { position: relative; overflow: hidden; }
+.vl-shimmer-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  animation: vl-shimmer-over 2.5s infinite;
+  pointer-events: none;
+}
+
 /* Skip navigation */
 .skip-nav {
   position: absolute;
-  top: -40px;
-  left: 0;
+  top: -40px; left: 0;
   z-index: 9999;
   padding: 8px 16px;
   background: hsl(var(--primary));
@@ -83,93 +173,69 @@
   transition: top 0.2s;
   font-weight: 500;
 }
-.skip-nav:focus {
-  top: 8px;
-}
+.skip-nav:focus { top: 8px; }
 
-/* Animations */
+/* ── Keyframe animations ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in {
-  animation: fadeIn 0.3s ease forwards;
+.animate-fade-in { animation: fadeIn 0.3s ease forwards; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes vl-blob {
+  0%, 100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+  33%       { border-radius: 30% 70% 40% 60% / 60% 30% 70% 40%; }
+  66%       { border-radius: 70% 30% 50% 50% / 30% 70% 50% 60%; }
+}
+
+@keyframes vl-scan {
+  0%   { top: 0; opacity: 1; }
+  90%  { opacity: 0.7; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes vl-pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.05); }
 }
 
 /* MagicUI Animation Keyframes */
 @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
-  }
+  to { transform: translate(calc(100cqw - 100%), 0); }
 }
 @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
-  }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
-  }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
-  }
-  100% {
-    transform: translateZ(0) rotate(360deg);
-  }
+  0%          { transform: translateZ(0) rotate(0); }
+  15%, 35%    { transform: translateZ(0) rotate(90deg); }
+  65%, 85%    { transform: translateZ(0) rotate(270deg); }
+  100%        { transform: translateZ(0) rotate(360deg); }
 }
-@keyframes border-beam {
-  100% {
-    offset-distance: 100%;
-  }
-}
+@keyframes border-beam { 100% { offset-distance: 100%; } }
 @keyframes ripple {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(0.9);
-  }
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -50%) scale(0.9); }
 }
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% - var(--gap))); }
 }
 @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-  }
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-100% - var(--gap))); }
 }
 @keyframes shimmer-text {
-  0%, 90%, 100% {
-    background-position: calc(-100% - var(--shimmer-width)) 0;
-  }
-  30%, 60% {
-    background-position: calc(100% + var(--shimmer-width)) 0;
-  }
+  0%, 90%, 100% { background-position: calc(-100% - var(--shimmer-width)) 0; }
+  30%, 60%      { background-position: calc(100% + var(--shimmer-width)) 0; }
 }
 
 /* MagicUI Animation Classes */
-.animate-shimmer-slide {
-  animation: shimmer-slide var(--speed) ease-in-out infinite alternate;
-}
-.animate-spin-around {
-  animation: spin-around calc(var(--speed) * 2) infinite linear;
-}
-.animate-ripple {
-  animation: ripple var(--duration, 2s) ease calc(var(--i, 0) * 0.2s) infinite;
-}
-.animate-marquee {
-  animation: marquee var(--duration) linear infinite;
-}
-.animate-marquee-vertical {
-  animation: marquee-vertical var(--duration) linear infinite;
-}
-.animate-shimmer-text {
-  animation: shimmer-text 8s infinite;
-}
+.animate-shimmer-slide  { animation: shimmer-slide var(--speed) ease-in-out infinite alternate; }
+.animate-spin-around    { animation: spin-around calc(var(--speed) * 2) infinite linear; }
+.animate-ripple         { animation: ripple var(--duration, 2s) ease calc(var(--i, 0) * 0.2s) infinite; }
+.animate-marquee        { animation: marquee var(--duration) linear infinite; }
+.animate-marquee-vertical { animation: marquee-vertical var(--duration) linear infinite; }
+.animate-shimmer-text   { animation: shimmer-text 8s infinite; }

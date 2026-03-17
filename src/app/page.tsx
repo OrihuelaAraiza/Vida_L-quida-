@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 };
 
 const CATEGORIES = [
-  { name: "Hogar", Icon: Home, href: "/productos?categoria=hogar", color: "bg-green-50" },
-  { name: "Industrial", Icon: Factory, href: "/productos?categoria=industrial", color: "bg-blue-50" },
-  { name: "Automotriz", Icon: Car, href: "/productos?categoria=automotriz", color: "bg-orange-50" },
-  { name: "Cosmética", Icon: Sparkles, href: "/productos?categoria=cosmetica", color: "bg-pink-50" },
+  { name: "Hogar", Icon: Home, href: "/productos?categoria=hogar" },
+  { name: "Industrial", Icon: Factory, href: "/productos?categoria=industrial" },
+  { name: "Automotriz", Icon: Car, href: "/productos?categoria=automotriz" },
+  { name: "Cosmética", Icon: Sparkles, href: "/productos?categoria=cosmetica" },
 ];
 
 const TESTIMONIALS = [
@@ -57,19 +57,19 @@ export default async function HomePage() {
       {/* Categories */}
       <section className="py-12" aria-labelledby="categories-heading">
         <Container>
-          <h2 id="categories-heading" className="text-2xl font-bold mb-6 text-center">Nuestras categorías</h2>
+          <h2 id="categories-heading" className="text-2xl font-bold mb-6 text-center text-white">Nuestras categorías</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.href}
                 href={cat.href}
-                className={`${cat.color} rounded-2xl p-6 text-center hover:shadow-md transition-shadow group min-h-[44px] flex flex-col items-center gap-2`}
+                className="relative overflow-hidden rounded-xl p-6 text-center hover:shadow-lg transition-all group min-h-[120px] flex flex-col items-center gap-3 border border-[rgba(0,194,240,0.1)] bg-[#071A2E] hover:border-[rgba(0,194,240,0.3)] hover:bg-[#0D2640]"
               >
                 <cat.Icon className="h-9 w-9 text-[hsl(var(--primary))]" aria-hidden="true" />
-                <span className="font-semibold text-sm group-hover:text-[hsl(var(--primary))] transition-colors">
+                <span className="font-semibold text-sm text-white/80 group-hover:text-[#00C2F0] transition-colors">
                   {cat.name}
                 </span>
-                <ChevronRight className="h-4 w-4 text-[hsl(var(--muted-foreground))] group-hover:text-[hsl(var(--primary))] transition-colors" />
+                <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-[#00C2F0] transition-colors" />
               </Link>
             ))}
           </div>
@@ -77,10 +77,10 @@ export default async function HomePage() {
       </section>
 
       {/* Featured products */}
-      <section className="py-12 bg-white" aria-labelledby="featured-heading">
+      <section className="py-12 bg-transparent" aria-labelledby="featured-heading">
         <Container>
           <div className="flex items-center justify-between mb-8">
-            <h2 id="featured-heading" className="text-2xl font-bold">Productos destacados</h2>
+            <h2 id="featured-heading" className="text-2xl font-bold text-white">Productos destacados</h2>
             <Link href="/productos" className="text-sm text-[hsl(var(--primary))] hover:underline font-medium flex items-center gap-1">
               Ver todos <ChevronRight className="h-4 w-4" />
             </Link>
@@ -95,7 +95,7 @@ export default async function HomePage() {
       {/* Value props */}
       <section className="py-16" aria-labelledby="values-heading">
         <Container>
-          <h2 id="values-heading" className="text-2xl font-bold text-center mb-12">¿Por qué elegir Vida Líquida?</h2>
+          <h2 id="values-heading" className="text-2xl font-bold text-center mb-12 text-white">¿Por qué elegir Vida Líquida?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { Icon: Leaf, title: "Ingredientes naturales", desc: "Formulados con extractos vegetales y sin compuestos petroquímicos." },
@@ -108,8 +108,8 @@ export default async function HomePage() {
               <div key={item.title} className="flex gap-4">
                 <item.Icon className="h-7 w-7 shrink-0 text-[hsl(var(--primary))]" aria-hidden="true" />
                 <div>
-                  <h3 className="font-semibold mb-1">{item.title}</h3>
-                  <p className="text-sm text-[hsl(var(--muted-foreground))]">{item.desc}</p>
+                  <h3 className="font-semibold mb-1 text-white">{item.title}</h3>
+                  <p className="text-sm text-white/50">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -118,7 +118,11 @@ export default async function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-[hsl(var(--primary))] text-white" aria-labelledby="testimonials-heading">
+      <section
+        className="py-16 text-white"
+        style={{ background: "linear-gradient(135deg, #003A8C, #0D2640)" }}
+        aria-labelledby="testimonials-heading"
+      >
         <Container>
           <h2 id="testimonials-heading" className="text-2xl font-bold text-center mb-10">Lo que dicen nuestros clientes</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -143,13 +147,13 @@ export default async function HomePage() {
       <section className="py-16">
         <Container narrow>
           <div className="rounded-3xl bg-[hsl(var(--accent))] p-10 text-center">
-            <h2 className="text-3xl font-bold text-[hsl(var(--accent-foreground))] mb-4">
+            <h2 className="text-3xl font-bold text-[#050E1A] mb-4">
               ¿Tienes un negocio o empresa?
             </h2>
-            <p className="text-[hsl(var(--accent-foreground)/70%)] mb-8 max-w-md mx-auto">
+            <p className="text-[#050E1A]/70 mb-8 max-w-md mx-auto">
               Ofrecemos presentaciones industriales de 5L y 20L con precios especiales para volumen.
             </p>
-            <Button size="lg" variant="secondary" asChild>
+            <Button size="lg" variant="default" asChild>
               <Link href="/productos?categoria=industrial">Ver productos industriales</Link>
             </Button>
           </div>

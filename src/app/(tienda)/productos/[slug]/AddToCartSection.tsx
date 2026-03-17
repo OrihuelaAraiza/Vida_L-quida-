@@ -39,15 +39,15 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
     <div className="space-y-5">
       {/* Animated price display — re-triggers on size change via key */}
       <div className="flex flex-col">
-        <div className="flex items-baseline gap-1 text-[hsl(var(--primary))]">
-          <span className="text-2xl font-bold">$</span>
+        <div className="flex items-baseline gap-1">
+          <span className="text-4xl font-display text-white/40">$</span>
           <NumberTicker
             key={selected}
             value={priceWithIVA}
             decimalPlaces={2}
-            className="text-2xl font-bold text-[hsl(var(--primary))]"
+            className="text-4xl font-display text-[hsl(var(--primary))]"
           />
-          <span className="text-2xl font-bold">MXN</span>
+          <span className="text-4xl font-display text-white/40">MXN</span>
         </div>
         <span className="text-xs text-[hsl(var(--muted-foreground))]">IVA incluido</span>
       </div>
@@ -68,13 +68,13 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
                   className={cn(
                     "relative flex flex-col items-center gap-0.5 rounded-md border px-4 py-2 text-sm transition-colors",
                     isSelected
-                      ? "border-[hsl(var(--primary))] bg-[hsl(var(--primary)/0.08)] text-[hsl(var(--primary))] font-medium"
-                      : "border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--foreground))] hover:border-[hsl(var(--primary)/0.5)]"
+                      ? "border-[#00C2F0] bg-[rgba(0,194,240,0.1)] text-[#00C2F0] font-bold"
+                      : "border-[rgba(255,255,255,0.1)] bg-transparent text-white/60 hover:border-[rgba(0,194,240,0.5)] hover:text-[#00C2F0]"
                   )}
                 >
                   <span>{p.size}</span>
                   <span className="text-xs opacity-70">{formatMXN(p.price * 1.16)}</span>
-                  {isSelected && <BorderBeam size={80} duration={4} borderWidth={1.5} />}
+                  {isSelected && <BorderBeam size={80} duration={4} borderWidth={1.5} colorFrom="#00C2F0" colorTo="#39D353" />}
                 </button>
               </div>
             );
@@ -89,7 +89,7 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
           avatarUrls={BUYER_AVATARS}
           className="[&_img]:h-7 [&_img]:w-7 [&_a]:h-7 [&_a]:w-7 [&_a]:text-[10px]"
         />
-        <span className="text-sm text-[hsl(var(--foreground)/0.6)]">
+        <span className="text-sm text-white/50">
           23 personas compraron esto esta semana
         </span>
       </div>
@@ -108,7 +108,7 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
         <Button
           variant="outline"
           size="icon"
-          className="shrink-0 h-12 w-12"
+          className="shrink-0 h-12 w-12 border-[rgba(255,255,255,0.1)] hover:border-[rgba(255,255,255,0.3)]"
           onClick={() => toggleItem(product)}
           aria-label={wishlisted ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
           aria-pressed={wishlisted}
@@ -117,11 +117,11 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
         </Button>
       </div>
 
-      <ul className="space-y-1.5 text-sm text-[hsl(var(--muted-foreground))]">
-        <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Certificado COFEPRIS</li>
-        <li className="flex items-center gap-2"><Leaf className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Biodegradable</li>
-        <li className="flex items-center gap-2"><Truck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Envío a todo México</li>
-        <li className="flex items-center gap-2"><RefreshCw className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Devoluciones en 30 días</li>
+      <ul className="space-y-1.5 text-sm">
+        <li className="flex items-center gap-2 text-white/50"><ShieldCheck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Certificado COFEPRIS</li>
+        <li className="flex items-center gap-2 text-white/50"><Leaf className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Biodegradable</li>
+        <li className="flex items-center gap-2 text-white/50"><Truck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Envío a todo México</li>
+        <li className="flex items-center gap-2 text-white/50"><RefreshCw className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Devoluciones en 30 días</li>
       </ul>
     </div>
   );
