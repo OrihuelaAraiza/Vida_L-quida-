@@ -27,7 +27,7 @@ export function GlowingEffect({
   movementDuration = 2,
   borderWidth = 1,
   disabled = false,
-  color = "#00C2F0",
+  color = "#5B00B5",
 }: GlowingEffectProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastPositionRef = useRef({ x: 0, y: 0 });

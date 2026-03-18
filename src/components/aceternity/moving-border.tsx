@@ -59,7 +59,7 @@ export function MovingBorder({
         <div
           className="h-20 w-20 opacity-[0.8]"
           style={{
-            background: "radial-gradient(#00C2F0 40%, transparent 60%)",
+            background: "radial-gradient(#5B00B5 40%, transparent 60%)",
           }}
         />
       </motion.div>

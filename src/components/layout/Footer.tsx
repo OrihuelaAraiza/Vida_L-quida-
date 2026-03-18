@@ -23,18 +23,18 @@ const navLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-[rgba(0,194,240,0.12)] bg-[#071A2E] text-white mt-20">
+    <footer className="border-t border-[rgba(26,26,110,0.12)] text-white mt-20" style={{ background: "#1A1A6E" }}>
       <Container className="py-12">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "linear-gradient(135deg, #00C2F0, #0088CC)" }}>
+              <div className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: "linear-gradient(135deg, #5B00B5, #7B20D5)" }}>
                 <span className="text-white font-bold text-sm">VL</span>
               </div>
               <span className="font-display text-xl tracking-widest">
-                <span style={{ color: "#00C2F0" }}>VIDA</span>{" "}
-                <span style={{ color: "#39D353" }}>LÍQUIDA</span>
+                <span style={{ color: "#4DC8E8" }}>VIDA</span>{" "}
+                <span style={{ color: "#80CC28" }}>LÍQUIDA</span>
               </span>
             </div>
             <p className="text-sm text-white/70 mb-4 leading-relaxed">
@@ -86,15 +86,15 @@ export function Footer() {
             <h3 className="font-semibold mb-4 text-white">Contacto</h3>
             <ul className="space-y-3 text-sm text-white/70">
               <li className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 shrink-0 text-[hsl(var(--accent))]" />
+                <MapPin className="h-4 w-4 shrink-0 text-[#4DC8E8]" />
                 Puebla, México
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 shrink-0 text-[hsl(var(--accent))]" />
+                <Phone className="h-4 w-4 shrink-0 text-[#4DC8E8]" />
                 <a href="tel:+522221234567" className="hover:text-white transition-colors">222 123 4567</a>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4 shrink-0 text-[hsl(var(--accent))]" />
+                <Mail className="h-4 w-4 shrink-0 text-[#4DC8E8]" />
                 <a href="mailto:hola@vidaliquida.mx" className="hover:text-white transition-colors">hola@vidaliquida.mx</a>
               </li>
             </ul>

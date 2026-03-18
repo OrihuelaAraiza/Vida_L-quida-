@@ -15,6 +15,14 @@ import { MagicCard } from "@/components/magicui/magic-card";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { BlurFade } from "@/components/magicui/blur-fade";
 
+const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  hogar:      { bg: "rgba(128,204,40,0.15)",  text: "#5FA01E", border: "rgba(128,204,40,0.4)" },
+  industrial: { bg: "rgba(91,0,181,0.12)",    text: "#5B00B5", border: "rgba(91,0,181,0.3)" },
+  automotriz: { bg: "rgba(26,26,110,0.12)",   text: "#1A1A6E", border: "rgba(26,26,110,0.3)" },
+  cosmetica:  { bg: "rgba(255,214,0,0.15)",   text: "#C28A00", border: "rgba(255,214,0,0.4)" },
+  default:    { bg: "rgba(77,200,232,0.12)",  text: "#2AAAC8", border: "rgba(77,200,232,0.3)" },
+};
+
 interface ProductCardProps {
   product: Product;
   index?: number;
@@ -30,6 +38,9 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
     ? urlForWithDimensions(product.images[0], 400, 400)
     : "/placeholder-product.jpg";
 
+  const catKey = (product.category?.slug ?? "default").toLowerCase();
+  const catColor = CATEGORY_COLORS[catKey] ?? CATEGORY_COLORS.default;
+
   function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
     addItem(product, defaultPresentation);
@@ -43,9 +54,9 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
   return (
     <BlurFade delay={index * 0.05} inView className="h-full">
       <MagicCard
-        gradientColor="rgba(0,194,240,0.15)"
+        gradientColor="rgba(91,0,181,0.08)"
         gradientSize={180}
-        className="rounded-xl overflow-hidden bg-[#071A2E] border border-[rgba(0,194,240,0.1)]"
+        className="rounded-xl overflow-hidden bg-white border border-[rgba(26,26,110,0.1)] shadow-sm hover:shadow-md transition-shadow"
       >
         <article className="group relative w-full">
           <Link href={`/productos/${product.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))] rounded-xl">
@@ -65,7 +76,10 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
 
               {/* Category badge */}
               {product.category && (
-                <Badge className="absolute top-2 left-2 text-xs bg-[rgba(0,194,240,0.15)] text-[#00C2F0] border border-[rgba(0,194,240,0.3)] hover:bg-[rgba(0,194,240,0.25)]">
+                <Badge
+                  className="absolute top-2 left-2 text-xs border hover:opacity-90"
+                  style={{ background: catColor.bg, color: catColor.text, borderColor: catColor.border }}
+                >
                   {product.category.name}
                 </Badge>
               )}
@@ -75,8 +89,8 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
                 onClick={handleWishlist}
                 aria-label={wishlisted ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
                 className={cn(
-                  "absolute top-2 right-2 h-9 w-9 rounded-full flex items-center justify-center bg-[#071A2E]/80 backdrop-blur-sm transition-all shadow-sm hover:scale-110 border border-[rgba(0,194,240,0.2)]",
-                  wishlisted ? "text-red-500" : "text-white/50"
+                  "absolute top-2 right-2 h-9 w-9 rounded-full flex items-center justify-center bg-white/90 backdrop-blur-sm transition-all shadow-sm hover:scale-110 border border-[rgba(26,26,110,0.15)]",
+                  wishlisted ? "text-red-500" : "text-[#1A1A6E]/50"
                 )}
               >
                 <Heart className={cn("h-4 w-4", wishlisted && "fill-red-500")} />
@@ -87,7 +101,7 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
                 <Button
                   onClick={handleAddToCart}
                   size="sm"
-                  className="w-full gap-2"
+                  className="w-full gap-2 bg-[#5B00B5] hover:bg-[#3D007A] text-white border-0"
                   aria-label={`Agregar ${product.name} al carrito`}
                 >
                   <ShoppingCart className="h-4 w-4" />
@@ -97,11 +111,11 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
             </div>
 
             <div className="space-y-1 px-1 pb-3">
-              <h3 className="font-medium text-sm leading-snug line-clamp-2 text-white group-hover:text-[#00C2F0] transition-colors">
+              <h3 className="font-medium text-sm leading-snug line-clamp-2 text-[#1A1A6E] group-hover:text-[#5B00B5] transition-colors">
                 {product.name}
               </h3>
-              <Rating value={product.rating ?? 0} size="sm" showCount count={product.reviewCount} className="[&_.count]:text-white/50" />
-              <PriceDisplay price={product.presentations?.[0]?.price ?? 0} size="sm" showIVA={false} className="text-[#00C2F0]" />
+              <Rating value={product.rating ?? 0} size="sm" showCount count={product.reviewCount} className="[&_.count]:text-[#1A1A6E]/50" />
+              <PriceDisplay price={product.presentations?.[0]?.price ?? 0} size="sm" showIVA={false} className="text-[#5B00B5] font-bold" />
             </div>
           </Link>
         </article>
@@ -109,8 +123,8 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
         {/* BorderBeam for bestseller products */}
         {product.isBestseller && (
           <BorderBeam
-            colorFrom="#00C2F0"
-            colorTo="#FFD600"
+            colorFrom="#5B00B5"
+            colorTo="#80CC28"
             duration={8}
             borderWidth={1.5}
           />

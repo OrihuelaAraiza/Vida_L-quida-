@@ -1,19 +1,21 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
-/* ── VIDA LÍQUIDA DESIGN SYSTEM v2 — Dark Electric ── */
+/* ── VIDA LÍQUIDA DESIGN SYSTEM v3 — Brand Real ── */
 @theme {
   /* Brand colors */
-  --color-vl-blue: #00C2F0;
-  --color-vl-blue-dark: #0088CC;
-  --color-vl-blue-deep: #003A8C;
-  --color-vl-green: #39D353;
-  --color-vl-green-dark: #1AA334;
+  --color-vl-purple: #5B00B5;
+  --color-vl-purple-dark: #3D007A;
+  --color-vl-purple-light: #7B20D5;
+  --color-vl-green: #80CC28;
+  --color-vl-green-dark: #5FA01E;
+  --color-vl-blue: #4DC8E8;
+  --color-vl-blue-dark: #2AAAC8;
+  --color-vl-navy: #1A1A6E;
+  --color-vl-navy-light: #2E2E9E;
   --color-vl-yellow: #FFD600;
-  --color-vl-yellow-dark: #C28A00;
-  --color-vl-bg: #050E1A;
-  --color-vl-surface: #071A2E;
-  --color-vl-surface-2: #0D2640;
+  --color-vl-bg: #F5F9FF;
+  --color-vl-surface: #FFFFFF;
 
   /* Fonts — next/font sets --font-bebas and --font-nunito on body */
   --font-display: var(--font-bebas, 'Bebas Neue', sans-serif);
@@ -28,43 +30,44 @@
 
 @layer base {
   :root {
-    /* shadcn/ui tokens — mapped to dark electric brand */
-    --background: 210 95% 6%;          /* #050E1A navy dark */
-    --foreground: 0 0% 100%;           /* white */
-    --card: 210 90% 10%;               /* #071A2E navy mid */
-    --card-foreground: 0 0% 100%;
-    --popover: 210 88% 9%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 194 100% 47%;           /* #00C2F0 azul eléctrico */
-    --primary-foreground: 210 95% 6%;
-    --secondary: 133 59% 52%;          /* #39D353 verde vibrante */
+    /* shadcn/ui tokens — mapped to brand real palette */
+    --background: 210 60% 97%;          /* #F5F9FF light blue-white */
+    --foreground: 240 62% 26%;          /* #1A1A6E navy */
+    --card: 0 0% 100%;                  /* white */
+    --card-foreground: 240 62% 26%;     /* navy */
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 62% 26%;
+    --primary: 276 100% 35%;            /* #5B00B5 purple */
+    --primary-foreground: 0 0% 100%;    /* white */
+    --secondary: 88 63% 48%;            /* #80CC28 green lime */
     --secondary-foreground: 0 0% 100%;
-    --accent: 50 100% 50%;             /* #FFD600 amarillo energía */
-    --accent-foreground: 210 95% 6%;
-    --muted: 210 60% 12%;
-    --muted-foreground: 210 20% 55%;
+    --accent: 50 100% 50%;              /* #FFD600 yellow */
+    --accent-foreground: 240 62% 26%;   /* navy */
+    --muted: 210 40% 94%;
+    --muted-foreground: 240 30% 45%;
     --destructive: 4 46% 54%;
     --destructive-foreground: 0 0% 100%;
-    --border: 210 60% 18%;
-    --input: 210 60% 14%;
-    --ring: 194 100% 47%;
+    --border: 210 30% 88%;
+    --input: 210 30% 92%;
+    --ring: 276 100% 35%;               /* purple */
     --radius: 0.5rem;
 
-    /* Brand raw values (for use without hsl()) */
-    --vl-blue: #00C2F0;
-    --vl-blue-dark: #0088CC;
-    --vl-blue-deep: #003A8C;
-    --vl-green: #39D353;
-    --vl-green-dark: #1AA334;
+    /* Brand raw values */
+    --vl-purple: #5B00B5;
+    --vl-purple-dark: #3D007A;
+    --vl-green: #80CC28;
+    --vl-green-dark: #5FA01E;
+    --vl-blue: #4DC8E8;
+    --vl-blue-dark: #2AAAC8;
+    --vl-navy: #1A1A6E;
     --vl-yellow: #FFD600;
-    --vl-bg: #050E1A;
-    --vl-surface: #071A2E;
-    --vl-surface-2: #0D2640;
+    --vl-bg: #F5F9FF;
+    --vl-surface: #FFFFFF;
 
     /* Glows */
-    --vl-glow-blue: 0 0 24px rgba(0,194,240,0.35);
-    --vl-glow-green: 0 0 24px rgba(57,211,83,0.35);
-    --vl-glow-yellow: 0 0 24px rgba(255,214,0,0.35);
+    --vl-glow-purple: 0 0 24px rgba(91,0,181,0.25);
+    --vl-glow-green: 0 0 24px rgba(128,204,40,0.25);
+    --vl-glow-blue: 0 0 24px rgba(77,200,232,0.25);
 
     /* Spacing base grid */
     --space-1: 4px; --space-2: 8px; --space-3: 12px;
@@ -80,8 +83,8 @@
     box-sizing: border-box;
   }
   body {
-    background-color: #050E1A;
-    color: #FFFFFF;
+    background-color: #F5F9FF;
+    color: #1A1A6E;
     font-family: var(--font-body);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
@@ -109,37 +112,37 @@
 /* ── Brand utility classes ── */
 .font-display { font-family: var(--font-display); letter-spacing: 0.05em; }
 
-.vl-gradient-text-blue {
-  background: linear-gradient(90deg, #00C2F0, #60EFFF);
+.vl-gradient-text-purple {
+  background: linear-gradient(90deg, #5B00B5, #7B20D5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .vl-gradient-text-green {
-  background: linear-gradient(90deg, #39D353, #A8FF78);
+  background: linear-gradient(90deg, #80CC28, #A8E850);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.vl-gradient-text-yellow {
-  background: linear-gradient(90deg, #FFD600, #FFE566);
+.vl-gradient-text-blue {
+  background: linear-gradient(90deg, #4DC8E8, #80DEFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .vl-surface-card {
-  background: var(--vl-surface);
-  border: 1px solid rgba(0,194,240,0.12);
+  background: #FFFFFF;
+  border: 1px solid rgba(91,0,181,0.12);
   border-radius: 12px;
 }
-.vl-glow-blue { box-shadow: var(--vl-glow-blue); }
+.vl-glow-purple { box-shadow: var(--vl-glow-purple); }
 .vl-glow-green { box-shadow: var(--vl-glow-green); }
-.vl-glow-yellow { box-shadow: var(--vl-glow-yellow); }
+.vl-glow-blue { box-shadow: var(--vl-glow-blue); }
 
 /* Scan line animation */
 .vl-scan-line {
-  background: linear-gradient(90deg, transparent, #00C2F0, #39D353, transparent);
+  background: linear-gradient(90deg, transparent, #4DC8E8, #80CC28, transparent);
   height: 1px;
   animation: vl-scan 4s linear infinite;
 }
@@ -155,7 +158,7 @@
   position: absolute;
   top: 0; left: -100%;
   width: 60%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
   animation: vl-shimmer-over 2.5s infinite;
   pointer-events: none;
 }

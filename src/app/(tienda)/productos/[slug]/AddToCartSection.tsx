@@ -40,16 +40,16 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
       {/* Animated price display — re-triggers on size change via key */}
       <div className="flex flex-col">
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-display text-white/40">$</span>
+          <span className="text-4xl font-display text-[#1A1A6E]/40">$</span>
           <NumberTicker
             key={selected}
             value={priceWithIVA}
             decimalPlaces={2}
-            className="text-4xl font-display text-[hsl(var(--primary))]"
+            className="text-4xl font-display text-[#5B00B5]"
           />
-          <span className="text-4xl font-display text-white/40">MXN</span>
+          <span className="text-4xl font-display text-[#1A1A6E]/40">MXN</span>
         </div>
-        <span className="text-xs text-[hsl(var(--muted-foreground))]">IVA incluido</span>
+        <span className="text-xs text-[#1A1A6E]/50">IVA incluido</span>
       </div>
 
       {/* Size selector with BorderBeam on selected pill */}
@@ -68,13 +68,13 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
                   className={cn(
                     "relative flex flex-col items-center gap-0.5 rounded-md border px-4 py-2 text-sm transition-colors",
                     isSelected
-                      ? "border-[#00C2F0] bg-[rgba(0,194,240,0.1)] text-[#00C2F0] font-bold"
-                      : "border-[rgba(255,255,255,0.1)] bg-transparent text-white/60 hover:border-[rgba(0,194,240,0.5)] hover:text-[#00C2F0]"
+                      ? "border-[#5B00B5] bg-[rgba(91,0,181,0.08)] text-[#5B00B5] font-bold"
+                      : "border-[rgba(26,26,110,0.15)] bg-white text-[#1A1A6E]/60 hover:border-[rgba(91,0,181,0.4)] hover:text-[#5B00B5]"
                   )}
                 >
                   <span>{p.size}</span>
                   <span className="text-xs opacity-70">{formatMXN(p.price * 1.16)}</span>
-                  {isSelected && <BorderBeam size={80} duration={4} borderWidth={1.5} colorFrom="#00C2F0" colorTo="#39D353" />}
+                  {isSelected && <BorderBeam size={80} duration={4} borderWidth={1.5} colorFrom="#5B00B5" colorTo="#80CC28" />}
                 </button>
               </div>
             );
@@ -89,7 +89,7 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
           avatarUrls={BUYER_AVATARS}
           className="[&_img]:h-7 [&_img]:w-7 [&_a]:h-7 [&_a]:w-7 [&_a]:text-[10px]"
         />
-        <span className="text-sm text-white/50">
+        <span className="text-sm text-[#1A1A6E]/50">
           23 personas compraron esto esta semana
         </span>
       </div>
@@ -98,7 +98,7 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
         <Button
           onClick={handleAddToCart}
           size="lg"
-          className="flex-1 gap-2"
+          className="flex-1 gap-2 bg-[#5B00B5] hover:bg-[#3D007A] text-white border-0"
           aria-label={`Agregar ${product.name} (${selected}) al carrito`}
         >
           <ShoppingCart className="h-5 w-5" />
@@ -108,7 +108,7 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
         <Button
           variant="outline"
           size="icon"
-          className="shrink-0 h-12 w-12 border-[rgba(255,255,255,0.1)] hover:border-[rgba(255,255,255,0.3)]"
+          className="shrink-0 h-12 w-12 border-[rgba(26,26,110,0.2)] hover:border-[rgba(91,0,181,0.4)]"
           onClick={() => toggleItem(product)}
           aria-label={wishlisted ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
           aria-pressed={wishlisted}
@@ -118,10 +118,10 @@ export function AddToCartSection({ product }: AddToCartSectionProps) {
       </div>
 
       <ul className="space-y-1.5 text-sm">
-        <li className="flex items-center gap-2 text-white/50"><ShieldCheck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Certificado COFEPRIS</li>
-        <li className="flex items-center gap-2 text-white/50"><Leaf className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Biodegradable</li>
-        <li className="flex items-center gap-2 text-white/50"><Truck className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Envío a todo México</li>
-        <li className="flex items-center gap-2 text-white/50"><RefreshCw className="h-4 w-4 text-[hsl(var(--primary))] shrink-0" aria-hidden="true" /> Devoluciones en 30 días</li>
+        <li className="flex items-center gap-2 text-[#1A1A6E]/60"><ShieldCheck className="h-4 w-4 text-[#5B00B5] shrink-0" aria-hidden="true" /> Certificado COFEPRIS</li>
+        <li className="flex items-center gap-2 text-[#1A1A6E]/60"><Leaf className="h-4 w-4 text-[#80CC28] shrink-0" aria-hidden="true" /> Biodegradable</li>
+        <li className="flex items-center gap-2 text-[#1A1A6E]/60"><Truck className="h-4 w-4 text-[#4DC8E8] shrink-0" aria-hidden="true" /> Envío a todo México</li>
+        <li className="flex items-center gap-2 text-[#1A1A6E]/60"><RefreshCw className="h-4 w-4 text-[#4DC8E8] shrink-0" aria-hidden="true" /> Devoluciones en 30 días</li>
       </ul>
     </div>
   );

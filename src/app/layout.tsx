@@ -35,10 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-MX" className="dark" suppressHydrationWarning>
+    <html lang="es-MX" suppressHydrationWarning>
       <body
         className={`${bebasNeue.variable} ${nunito.variable}`}
-        style={{ background: "#050E1A", color: "#FFFFFF", minHeight: "100vh" }}
+        style={{ background: "#F5F9FF", color: "#1A1A6E", minHeight: "100vh" }}
       >
         <a href="#main-content" className="skip-nav">
           Saltar al contenido principal

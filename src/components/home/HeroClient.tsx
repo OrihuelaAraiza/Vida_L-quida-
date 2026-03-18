@@ -14,11 +14,6 @@ const AnimatedGridPattern = dynamic(
   { ssr: false }
 );
 
-const BackgroundBeams = dynamic(
-  () => import("@/components/aceternity/background-beams").then((m) => m.BackgroundBeams),
-  { ssr: false }
-);
-
 const STATS = [
   { value: 15, suffix: "+ estados", label: "Cobertura nacional" },
   { value: 7, suffix: " productos", label: "Líneas certificadas" },
@@ -29,42 +24,29 @@ export function HeroClient() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-[#050E1A] text-white min-h-[85vh] flex items-center">
+    <section className="relative overflow-hidden text-white min-h-[85vh] flex items-center" style={{ background: "linear-gradient(135deg, #4DC8E8 0%, #2AAAC8 60%, #1A8AAA 100%)" }}>
       {/* Background layers */}
       {!shouldReduceMotion && (
-        <>
-          {/* Animated grid — very subtle */}
-          <div
-            className="absolute inset-0 opacity-20"
-            style={{ willChange: "transform", contain: "layout paint" }}
-            aria-hidden="true"
-          >
-            <AnimatedGridPattern
-              numSquares={40}
-              maxOpacity={0.3}
-              duration={4}
-              repeatDelay={0.5}
-              className="text-[#00C2F0] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,white_20%,transparent_90%)]"
-            />
-          </div>
-          {/* Background beams */}
-          <BackgroundBeams className="opacity-25" />
-        </>
-      )}
-
-      {/* Scan line */}
-      {!shouldReduceMotion && (
         <div
-          className="absolute left-0 right-0 h-[1px] z-10 pointer-events-none vl-scan-line"
+          className="absolute inset-0 opacity-15"
+          style={{ willChange: "transform", contain: "layout paint" }}
           aria-hidden="true"
-        />
+        >
+          <AnimatedGridPattern
+            numSquares={40}
+            maxOpacity={0.3}
+            duration={4}
+            repeatDelay={0.5}
+            className="text-white [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,white_20%,transparent_90%)]"
+          />
+        </div>
       )}
 
-      {/* Blue glow accent — top right */}
+      {/* Purple glow accent — top right */}
       <div
         className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(0,194,240,0.12) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(91,0,181,0.18) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
@@ -73,7 +55,7 @@ export function HeroClient() {
       <div
         className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(57,211,83,0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(128,204,40,0.15) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
@@ -82,29 +64,29 @@ export function HeroClient() {
         <div className="max-w-3xl">
 
           {/* Certification badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(0,194,240,0.3)] bg-[rgba(0,194,240,0.08)] text-xs font-bold tracking-widest text-[#00C2F0] uppercase mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/40 bg-white/20 text-xs font-bold tracking-widest text-white uppercase mb-8 backdrop-blur-sm">
             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
             Certificado COFEPRIS
-            <span className="opacity-40">·</span>
+            <span className="opacity-60">·</span>
             <Leaf className="h-3.5 w-3.5" aria-hidden="true" />
             Aval BUAP
           </div>
 
-          {/* Headline — multi-line display type */}
+          {/* Headline */}
           <div className="mb-8 space-y-1">
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-widest leading-none text-white">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-widest leading-none text-white drop-shadow-lg">
               LIMPIEZA
             </h1>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-widest leading-none vl-gradient-text-blue">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-widest leading-none" style={{ color: "#5B00B5", textShadow: "0 2px 20px rgba(91,0,181,0.4)" }}>
               ORGÁNICA
             </h1>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-widest leading-none vl-gradient-text-green">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-widest leading-none" style={{ color: "#80CC28", textShadow: "0 2px 20px rgba(128,204,40,0.4)" }}>
               CERTIFICADA
             </h1>
           </div>
 
           {/* Description */}
-          <p className="text-base md:text-lg text-white/60 mb-10 max-w-xl leading-relaxed font-body">
+          <p className="text-base md:text-lg text-white/90 mb-10 max-w-xl leading-relaxed font-body drop-shadow">
             Biodegradables, sin vapores tóxicos, formulados con ingredientes naturales en Puebla.
             Seguros para tu familia y el planeta.
           </p>
@@ -113,11 +95,11 @@ export function HeroClient() {
           <div className="flex flex-wrap gap-8 mb-10" aria-label="Datos de Vida Líquida">
             {STATS.map((stat) => (
               <div key={stat.label} className="text-center">
-                <p className="font-display text-3xl md:text-4xl tracking-wider text-[#00C2F0] leading-none">
-                  <NumberTicker value={stat.value} className="text-[#00C2F0]" />
+                <p className="font-display text-3xl md:text-4xl tracking-wider text-white leading-none drop-shadow">
+                  <NumberTicker value={stat.value} className="text-white" />
                   <span>{stat.suffix}</span>
                 </p>
-                <p className="text-xs text-white/40 mt-1 font-body uppercase tracking-widest">
+                <p className="text-xs text-white/70 mt-1 font-body uppercase tracking-widest">
                   {stat.label}
                 </p>
               </div>
@@ -127,8 +109,8 @@ export function HeroClient() {
           {/* CTAs */}
           <div className="flex flex-wrap gap-4">
             <ShimmerButton
-              background="#0088CC"
-              shimmerColor="#FFD600"
+              background="#5B00B5"
+              shimmerColor="#80CC28"
               borderRadius="0.5rem"
               shimmerDuration="2.5s"
               className="font-display text-lg tracking-widest text-white px-8 py-3"
@@ -141,7 +123,7 @@ export function HeroClient() {
               size="lg"
               variant="outline"
               asChild
-              className="border-white/20 text-white/70 hover:bg-white/5 hover:text-white hover:border-white/40 font-body"
+              className="border-white/50 text-white hover:bg-white/20 hover:text-white hover:border-white/70 font-body backdrop-blur-sm"
             >
               <Link href="/nosotros">Conoce más</Link>
             </Button>
