@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ShoppingCart, User, Search } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/stores/cart-store";
@@ -17,6 +18,7 @@ const CATEGORIES = [
 ];
 
 export function Header() {
+  const router = useRouter();
   const itemCount = useCartStore((s) => s.getItemCount());
   const openCart = useCartStore((s) => s.openCart);
   const { openSearch } = useUIStore();
@@ -81,10 +83,14 @@ export function Header() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <Button variant="ghost" size="icon" asChild aria-label="Mi cuenta" className="text-white hover:bg-white/20 hover:text-white">
-              <Link href="/cuenta">
-                <User className="h-5 w-5" />
-              </Link>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.push("/cuenta")}
+              aria-label="Mi cuenta"
+              className="text-white hover:bg-white/20 hover:text-white"
+            >
+              <User className="h-5 w-5" />
             </Button>
 
             <Button

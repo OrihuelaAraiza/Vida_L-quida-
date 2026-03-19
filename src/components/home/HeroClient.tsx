@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useReducedMotion } from "framer-motion";
 import { ShieldCheck, Leaf } from "lucide-react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
@@ -21,6 +21,7 @@ const STATS = [
 ];
 
 export function HeroClient() {
+  const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -122,10 +123,10 @@ export function HeroClient() {
             <Button
               size="lg"
               variant="outline"
-              asChild
+              onClick={() => router.push("/nosotros")}
               className="border-white/50 text-white hover:bg-white/20 hover:text-white hover:border-white/70 font-body backdrop-blur-sm"
             >
-              <Link href="/nosotros">Conoce más</Link>
+              Conoce más
             </Button>
           </div>
         </div>

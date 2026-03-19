@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "./Container";
-import { Instagram, Facebook, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Facebook, Youtube, Mail, Phone, MapPin, Linkedin, Search } from "lucide-react";
 
 const navLinks = {
   tienda: [
@@ -12,6 +12,7 @@ const navLinks = {
   ],
   empresa: [
     { label: "Nosotros", href: "/nosotros" },
+    { label: "Distribuidores", href: "/distribuidores" },
     { label: "Blog", href: "/blog" },
     { label: "Contacto", href: "mailto:hola@vidaliquida.mx" },
   ],
@@ -20,6 +21,34 @@ const navLinks = {
     { label: "Términos y condiciones", href: "/terminos" },
   ],
 };
+
+const SOCIAL = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/p/B6ENznppTZ4/?igshid=1q4n30mpjvfxc",
+    Icon: Instagram,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/Vidaliquidalimpiezasinagua",
+    Icon: Facebook,
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/channel/UCSi_SMNltB2HAHX7uhtV84A?view_as=subscriber",
+    Icon: Youtube,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/vida-liquida/",
+    Icon: Linkedin,
+  },
+  {
+    label: "Google",
+    href: "https://www.google.com.mx/search?q=VIDA+LIQUIDA+LIMPIEZA+PROFESIONAL+LIBRE+DE+ENJUAGUE&ludocid=13490171752195838783&lsig=AB86z5VAj5W3B46aPnGLibTu0jI3#lkt=LocalPoiPhotos",
+    Icon: Search,
+  },
+];
 
 export function Footer() {
   return (
@@ -40,16 +69,19 @@ export function Footer() {
             <p className="text-sm text-white/70 mb-4 leading-relaxed">
               Productos de limpieza orgánicos, biodegradables y sin vapores tóxicos. Certificados por COFEPRIS y avalados por la BUAP.
             </p>
-            <div className="flex gap-3">
-              <a href="https://instagram.com/vidaliquida" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/60 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="https://facebook.com/vidaliquida" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/60 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="https://youtube.com/@vidaliquida" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-white/60 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
-                <Youtube className="h-5 w-5" />
-              </a>
+            <div className="flex flex-wrap gap-2">
+              {SOCIAL.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="text-white/60 hover:text-white transition-colors h-[44px] w-[44px] flex items-center justify-center rounded-lg hover:bg-white/10"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
 
