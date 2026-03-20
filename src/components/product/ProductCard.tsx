@@ -13,14 +13,14 @@ import { PriceDisplay } from "./PriceDisplay";
 import { cn } from "@/lib/utils";
 import { MagicCard } from "@/components/magicui/magic-card";
 import { BorderBeam } from "@/components/magicui/border-beam";
-import { BlurFade } from "@/components/magicui/blur-fade";
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  hogar:      { bg: "rgba(128,204,40,0.15)",  text: "#5FA01E", border: "rgba(128,204,40,0.4)" },
-  industrial: { bg: "rgba(91,0,181,0.12)",    text: "#5B00B5", border: "rgba(91,0,181,0.3)" },
-  automotriz: { bg: "rgba(26,26,110,0.12)",   text: "#1A1A6E", border: "rgba(26,26,110,0.3)" },
-  cosmetica:  { bg: "rgba(255,214,0,0.15)",   text: "#C28A00", border: "rgba(255,214,0,0.4)" },
-  default:    { bg: "rgba(77,200,232,0.12)",  text: "#2AAAC8", border: "rgba(77,200,232,0.3)" },
+  hogar:       { bg: "rgba(128,204,40,0.15)",  text: "#5FA01E", border: "rgba(128,204,40,0.4)" },
+  industrial:  { bg: "rgba(91,0,181,0.12)",    text: "#5B00B5", border: "rgba(91,0,181,0.3)" },
+  automotriz:  { bg: "rgba(26,26,110,0.12)",   text: "#1A1A6E", border: "rgba(26,26,110,0.3)" },
+  cosmetica:   { bg: "rgba(255,214,0,0.15)",   text: "#C28A00", border: "rgba(255,214,0,0.4)" },
+  desinfeccion:{ bg: "rgba(77,200,232,0.12)",  text: "#2AAAC8", border: "rgba(77,200,232,0.3)" },
+  default:     { bg: "rgba(77,200,232,0.12)",  text: "#2AAAC8", border: "rgba(77,200,232,0.3)" },
 };
 
 interface ProductCardProps {
@@ -52,26 +52,34 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
   }
 
   return (
-    <BlurFade delay={index * 0.05} className="h-full">
+    <div className="h-full">
       <MagicCard
         gradientColor="rgba(91,0,181,0.08)"
         gradientSize={180}
         className="rounded-xl overflow-hidden bg-white border border-[rgba(26,26,110,0.1)] shadow-sm hover:shadow-md transition-shadow"
       >
         <article className="group relative w-full">
-          <Link href={`/productos/${product.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))] rounded-xl">
+          <Link
+            href={`/productos/${product.slug}`}
+            className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))] rounded-xl"
+          >
+            {/* Image container */}
             <div
               className={cn(
-                "relative overflow-hidden rounded-xl bg-gray-100 mb-3",
-                isStatic ? "aspect-[16/9]" : (featured ? "aspect-[4/3] md:aspect-square" : "aspect-square")
+                "relative overflow-hidden rounded-t-xl bg-gray-50",
+                isStatic
+                  ? "aspect-[16/9]"
+                  : featured ? "aspect-[4/3] md:aspect-square" : "aspect-square"
               )}
             >
               <Image
                 src={imageUrl}
-                alt={product.images?.[0]?.alt ?? `${product.name} - Vida Líquida`}
+                alt={`${product.name} - Vida Líquida`}
                 fill
+                priority={index < 4}
+                unoptimized={isStatic}
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
 
               {/* Category badge */}
@@ -110,7 +118,8 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
               </div>
             </div>
 
-            <div className="space-y-1 px-1 pb-3">
+            {/* Info */}
+            <div className="space-y-1 px-3 py-3">
               <h3 className="font-medium text-sm leading-snug line-clamp-2 text-[#1A1A6E] group-hover:text-[#5B00B5] transition-colors">
                 {product.name}
               </h3>
@@ -120,16 +129,10 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
           </Link>
         </article>
 
-        {/* BorderBeam for bestseller products */}
         {product.isBestseller && (
-          <BorderBeam
-            colorFrom="#5B00B5"
-            colorTo="#80CC28"
-            duration={8}
-            borderWidth={1.5}
-          />
+          <BorderBeam colorFrom="#5B00B5" colorTo="#80CC28" duration={8} borderWidth={1.5} />
         )}
       </MagicCard>
-    </BlurFade>
+    </div>
   );
 }
