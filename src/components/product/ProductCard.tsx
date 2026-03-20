@@ -66,21 +66,32 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
             {/* Image container */}
             <div
               className={cn(
-                "relative overflow-hidden rounded-t-xl bg-gray-50",
+                "overflow-hidden rounded-t-xl bg-gray-50",
                 isStatic
-                  ? "aspect-[16/9]"
-                  : featured ? "aspect-[4/3] md:aspect-square" : "aspect-square"
+                  ? "w-full"
+                  : cn("relative", featured ? "aspect-[4/3] md:aspect-square" : "aspect-square")
               )}
             >
-              <Image
-                src={imageUrl}
-                alt={`${product.name} - Vida Líquida`}
-                fill
-                priority={index < 4}
-                unoptimized={isStatic}
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
+              {isStatic ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={imageUrl}
+                  alt={`${product.name} - Vida Líquida`}
+                  width={1046}
+                  height={588}
+                  loading={index < 4 ? "eager" : "lazy"}
+                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 block"
+                />
+              ) : (
+                <Image
+                  src={imageUrl}
+                  alt={`${product.name} - Vida Líquida`}
+                  fill
+                  priority={index < 4}
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              )}
 
               {/* Category badge */}
               {product.category && (
