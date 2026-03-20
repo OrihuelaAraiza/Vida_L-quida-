@@ -34,6 +34,7 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
   const { toggleItem, isWishlisted } = useWishlistStore();
   const wishlisted = isWishlisted(product._id);
   const defaultPresentation = product.presentations?.[0]?.size ?? "";
+  const isStatic = Boolean(product._staticImageUrl);
   const imageUrl = product._staticImageUrl
     ?? (product.images?.[0] ? urlForWithDimensions(product.images[0], 400, 400) : "/placeholder-product.jpg");
 
@@ -51,7 +52,7 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
   }
 
   return (
-    <BlurFade delay={index * 0.05} inView className="h-full">
+    <BlurFade delay={index * 0.05} className="h-full">
       <MagicCard
         gradientColor="rgba(91,0,181,0.08)"
         gradientSize={180}
@@ -61,8 +62,8 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
           <Link href={`/productos/${product.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))] rounded-xl">
             <div
               className={cn(
-                "relative overflow-hidden rounded-xl bg-[hsl(var(--muted))] mb-3",
-                featured ? "aspect-[4/3] md:aspect-square" : "aspect-square"
+                "relative overflow-hidden rounded-xl bg-gray-100 mb-3",
+                isStatic ? "aspect-[16/9]" : (featured ? "aspect-[4/3] md:aspect-square" : "aspect-square")
               )}
             >
               <Image
