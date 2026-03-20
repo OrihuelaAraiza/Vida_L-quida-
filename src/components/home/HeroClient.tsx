@@ -29,16 +29,18 @@ export function HeroClient() {
       {/* Background layers */}
       {!shouldReduceMotion && (
         <div
-          className="absolute inset-0 opacity-15"
+          className="absolute inset-0 opacity-60"
           style={{ willChange: "transform", contain: "layout paint" }}
           aria-hidden="true"
         >
           <AnimatedGridPattern
-            numSquares={40}
-            maxOpacity={0.3}
-            duration={4}
-            repeatDelay={0.5}
-            className="text-white [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,white_20%,transparent_90%)]"
+            numSquares={70}
+            maxOpacity={0.5}
+            duration={2.5}
+            repeatDelay={0.2}
+            width={50}
+            height={50}
+            className="text-white [mask-image:radial-gradient(ellipse_90%_80%_at_50%_50%,white_40%,transparent_95%)]"
           />
         </div>
       )}
