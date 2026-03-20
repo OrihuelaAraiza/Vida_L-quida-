@@ -11,8 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Rating } from "@/components/shared/Rating";
 import { PriceDisplay } from "./PriceDisplay";
 import { cn } from "@/lib/utils";
-import { MagicCard } from "@/components/magicui/magic-card";
-import { BorderBeam } from "@/components/magicui/border-beam";
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   hogar:       { bg: "rgba(128,204,40,0.15)",  text: "#5FA01E", border: "rgba(128,204,40,0.4)" },
@@ -52,98 +50,89 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
   }
 
   return (
-    <div className="h-full">
-      <MagicCard
-        gradientColor="rgba(91,0,181,0.08)"
-        gradientSize={180}
-        className="rounded-xl overflow-hidden bg-white border border-[rgba(26,26,110,0.1)] shadow-sm hover:shadow-md transition-shadow"
-      >
-        <article className="group relative w-full">
-          <Link
-            href={`/productos/${product.slug}`}
-            className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))] rounded-xl"
+    <div className="h-full rounded-xl overflow-hidden bg-white border border-[rgba(26,26,110,0.1)] shadow-sm hover:shadow-lg transition-shadow">
+      <article className="group relative w-full">
+        <Link
+          href={`/productos/${product.slug}`}
+          className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))] rounded-xl"
+        >
+          {/* Image */}
+          <div
+            className={cn(
+              "relative overflow-hidden bg-gray-50",
+              isStatic
+                ? "w-full"
+                : featured ? "aspect-[4/3] md:aspect-square" : "aspect-square"
+            )}
           >
-            {/* Image container */}
-            <div
+            {isStatic ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={imageUrl}
+                alt={`${product.name} - Vida Líquida`}
+                width={1046}
+                height={588}
+                loading={index < 4 ? "eager" : "lazy"}
+                decoding="async"
+                className="w-full h-auto block"
+              />
+            ) : (
+              <Image
+                src={imageUrl}
+                alt={`${product.name} - Vida Líquida`}
+                fill
+                priority={index < 4}
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            )}
+
+            {/* Category badge */}
+            {product.category && (
+              <Badge
+                className="absolute top-2 left-2 text-xs border hover:opacity-90"
+                style={{ background: catColor.bg, color: catColor.text, borderColor: catColor.border }}
+              >
+                {product.category.name}
+              </Badge>
+            )}
+
+            {/* Wishlist */}
+            <button
+              onClick={handleWishlist}
+              aria-label={wishlisted ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
               className={cn(
-                "overflow-hidden rounded-t-xl bg-gray-50",
-                isStatic
-                  ? "w-full"
-                  : cn("relative", featured ? "aspect-[4/3] md:aspect-square" : "aspect-square")
+                "absolute top-2 right-2 h-9 w-9 rounded-full flex items-center justify-center bg-white/90 backdrop-blur-sm transition-all shadow-sm hover:scale-110 border border-[rgba(26,26,110,0.15)]",
+                wishlisted ? "text-red-500" : "text-[#1A1A6E]/50"
               )}
             >
-              {isStatic ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={imageUrl}
-                  alt={`${product.name} - Vida Líquida`}
-                  width={1046}
-                  height={588}
-                  loading={index < 4 ? "eager" : "lazy"}
-                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 block"
-                />
-              ) : (
-                <Image
-                  src={imageUrl}
-                  alt={`${product.name} - Vida Líquida`}
-                  fill
-                  priority={index < 4}
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              )}
+              <Heart className={cn("h-4 w-4", wishlisted && "fill-red-500")} />
+            </button>
 
-              {/* Category badge */}
-              {product.category && (
-                <Badge
-                  className="absolute top-2 left-2 text-xs border hover:opacity-90"
-                  style={{ background: catColor.bg, color: catColor.text, borderColor: catColor.border }}
-                >
-                  {product.category.name}
-                </Badge>
-              )}
-
-              {/* Wishlist */}
-              <button
-                onClick={handleWishlist}
-                aria-label={wishlisted ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
-                className={cn(
-                  "absolute top-2 right-2 h-9 w-9 rounded-full flex items-center justify-center bg-white/90 backdrop-blur-sm transition-all shadow-sm hover:scale-110 border border-[rgba(26,26,110,0.15)]",
-                  wishlisted ? "text-red-500" : "text-[#1A1A6E]/50"
-                )}
+            {/* Quick add */}
+            <div className="absolute bottom-0 inset-x-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-200">
+              <Button
+                onClick={handleAddToCart}
+                size="sm"
+                className="w-full gap-2 bg-[#5B00B5] hover:bg-[#3D007A] text-white border-0"
+                aria-label={`Agregar ${product.name} al carrito`}
               >
-                <Heart className={cn("h-4 w-4", wishlisted && "fill-red-500")} />
-              </button>
-
-              {/* Quick add */}
-              <div className="absolute bottom-0 inset-x-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-200">
-                <Button
-                  onClick={handleAddToCart}
-                  size="sm"
-                  className="w-full gap-2 bg-[#5B00B5] hover:bg-[#3D007A] text-white border-0"
-                  aria-label={`Agregar ${product.name} al carrito`}
-                >
-                  <ShoppingCart className="h-4 w-4" />
-                  Agregar
-                </Button>
-              </div>
+                <ShoppingCart className="h-4 w-4" />
+                Agregar
+              </Button>
             </div>
+          </div>
 
-            {/* Info */}
-            <div className="space-y-1 px-3 py-3">
-              <h3 className="font-medium text-sm leading-snug line-clamp-2 text-[#1A1A6E] group-hover:text-[#5B00B5] transition-colors">
-                {product.name}
-              </h3>
-              <Rating value={product.rating ?? 0} size="sm" showCount count={product.reviewCount} className="[&_.count]:text-[#1A1A6E]/50" />
-              <PriceDisplay price={product.presentations?.[0]?.price ?? 0} size="sm" showIVA={false} className="text-[#5B00B5] font-bold" />
-            </div>
-          </Link>
-        </article>
-
-        {product.isBestseller && (
-          <BorderBeam colorFrom="#5B00B5" colorTo="#80CC28" duration={8} borderWidth={1.5} />
-        )}
-      </MagicCard>
+          {/* Info */}
+          <div className="space-y-1 px-3 py-3">
+            <h3 className="font-medium text-sm leading-snug line-clamp-2 text-[#1A1A6E] group-hover:text-[#5B00B5] transition-colors">
+              {product.name}
+            </h3>
+            <Rating value={product.rating ?? 0} size="sm" showCount count={product.reviewCount} className="[&_.count]:text-[#1A1A6E]/50" />
+            <PriceDisplay price={product.presentations?.[0]?.price ?? 0} size="sm" showIVA={false} className="text-[#5B00B5] font-bold" />
+          </div>
+        </Link>
+      </article>
     </div>
   );
 }
