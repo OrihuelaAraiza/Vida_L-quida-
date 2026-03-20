@@ -5,6 +5,7 @@ import { Container } from "@/components/layout/Container";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { TrustBadges } from "@/components/shared/TrustBadges";
 import { HeroClient } from "@/components/home/HeroClient";
+import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { getFeaturedProducts } from "@/lib/sanity/queries";
 import { Star, ChevronRight, Home, Factory, Car, Sparkles, Leaf, Wind, Recycle, FlaskConical, ShieldCheck, Package } from "lucide-react";
 
@@ -90,6 +91,9 @@ export default async function HomePage() {
 
       {/* Trust badges */}
       <TrustBadges />
+
+      {/* Product showcase — catálogo completo con imágenes de marca */}
+      <ProductShowcase />
 
       {/* Value props */}
       <section className="py-16" aria-labelledby="values-heading">
