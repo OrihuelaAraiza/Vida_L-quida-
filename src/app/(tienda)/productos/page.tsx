@@ -5,6 +5,7 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { ProductGridSkeleton } from "@/components/shared/LoadingSkeleton";
 import { getAllProducts, getAllCategories } from "@/lib/sanity/queries";
+import { STATIC_PRODUCTS } from "@/data/productos";
 import { ProductFilters } from "./ProductFilters";
 
 export const revalidate = 30;
@@ -21,7 +22,7 @@ interface Props {
 export default async function ProductosPage({ searchParams }: Props) {
   const params = await searchParams;
 
-  const [products, categories] = await Promise.all([
+  const [sanityProducts, categories] = await Promise.all([
     getAllProducts({
       category: params.categoria,
       sort: params.sort,
@@ -30,6 +31,14 @@ export default async function ProductosPage({ searchParams }: Props) {
     }).catch(() => []),
     getAllCategories().catch(() => []),
   ]);
+
+  // Usar catálogo estático mientras no haya productos en Sanity
+  let products = sanityProducts.length > 0 ? sanityProducts : STATIC_PRODUCTS;
+
+  // Aplicar filtro de categoría sobre estáticos si corresponde
+  if (sanityProducts.length === 0 && params.categoria) {
+    products = products.filter((p: { category?: { slug?: string } }) => p.category?.slug === params.categoria);
+  }
 
   return (
     <>

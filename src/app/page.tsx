@@ -7,6 +7,7 @@ import { TrustBadges } from "@/components/shared/TrustBadges";
 import { HeroClient } from "@/components/home/HeroClient";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { getFeaturedProducts } from "@/lib/sanity/queries";
+import { STATIC_PRODUCTS } from "@/data/productos";
 import { Star, ChevronRight, Home, Factory, Car, Sparkles, Leaf, Wind, Recycle, FlaskConical, ShieldCheck, Package } from "lucide-react";
 
 export const revalidate = 300;
@@ -42,7 +43,9 @@ const organizationSchema = {
 };
 
 export default async function HomePage() {
-  const featuredProducts = await getFeaturedProducts().catch(() => []);
+  const sanityFeatured = await getFeaturedProducts().catch(() => []);
+  // Primeros 8 del catálogo estático como fallback
+  const featuredProducts = sanityFeatured.length > 0 ? sanityFeatured : STATIC_PRODUCTS.slice(0, 8);
 
   return (
     <>

@@ -29,6 +29,8 @@ export interface Product {
   rating: number;
   reviewCount: number;
   useCase?: string[];
+  /** URL directa (banner estático) cuando no hay imagen en Sanity */
+  _staticImageUrl?: string;
   _createdAt: string;
   _updatedAt: string;
 }

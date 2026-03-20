@@ -3,6 +3,7 @@
  * Imágenes: /public/images/banners/<slug>.webp
  * Actualizar precios aquí cuando cambien.
  */
+import type { Product } from "@/types";
 
 export interface Presentacion {
   volumen: string;
@@ -313,3 +314,39 @@ export const getPrecioDesde = (p: Producto): number =>
 
 export const getPorCategoria = (cat: Producto["categoria"]) =>
   PRODUCTOS.filter((p) => p.categoria === cat);
+
+/** Convierte el catálogo estático al formato Product que espera ProductGrid/ProductCard */
+export function toProductType(p: Producto): Product {
+  return {
+    _id: `static-${p.slug}`,
+    name: p.nombre,
+    slug: p.slug,
+    description: p.descripcion,
+    presentations: p.presentaciones.map((pr) => ({
+      size: pr.volumen,
+      price: pr.precio,
+    })),
+    images: [],
+    _staticImageUrl: p.banner,
+    category: {
+      _id: `cat-${p.categoria}`,
+      name: {
+        hogar: "Hogar",
+        industrial: "Industrial",
+        automotriz: "Automotriz",
+        cosmetica: "Cosmética",
+        desinfeccion: "Desinfección",
+      }[p.categoria] ?? p.categoria,
+      slug: p.categoria,
+    },
+    isFeatured: false,
+    isBestseller: p.buap,
+    rating: 5,
+    reviewCount: 0,
+    useCase: p.beneficios,
+    _createdAt: "2024-01-01T00:00:00Z",
+    _updatedAt: "2024-01-01T00:00:00Z",
+  };
+}
+
+export const STATIC_PRODUCTS: Product[] = PRODUCTOS.map(toProductType);

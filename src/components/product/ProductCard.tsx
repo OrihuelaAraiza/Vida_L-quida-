@@ -34,9 +34,8 @@ export function ProductCard({ product, index = 0, featured = false }: ProductCar
   const { toggleItem, isWishlisted } = useWishlistStore();
   const wishlisted = isWishlisted(product._id);
   const defaultPresentation = product.presentations?.[0]?.size ?? "";
-  const imageUrl = product.images?.[0]
-    ? urlForWithDimensions(product.images[0], 400, 400)
-    : "/placeholder-product.jpg";
+  const imageUrl = product._staticImageUrl
+    ?? (product.images?.[0] ? urlForWithDimensions(product.images[0], 400, 400) : "/placeholder-product.jpg");
 
   const catKey = (product.category?.slug ?? "default").toLowerCase();
   const catColor = CATEGORY_COLORS[catKey] ?? CATEGORY_COLORS.default;
